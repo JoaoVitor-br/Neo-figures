@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { signOut } from 'firebase/auth';
-import { autenticacao } from '../config/firebaseConfig';
+import { autenticacao } from '../Config/firebaseConfig';
 
 export default function TelaHome() {
   const fazerLogout = () => {
