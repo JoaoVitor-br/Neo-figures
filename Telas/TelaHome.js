@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { signOut } from 'firebase/auth';
-import { autenticacao } from '../Config/firebaseConfig';
+import { autenticacao } from '../config/firebaseConfig';
 
 export default function TelaHome() {
   const fazerLogout = () => {
@@ -10,7 +10,7 @@ export default function TelaHome() {
 
   return (
     <View style={estilos.container}>
-      <Text>Bem-vindo, {autenticacao.currentUser?.email}</Text>
+      <Text>Bem-vindo, {autenticacao.currentUser?.displayName ?? autenticacao.currentUser?.email}</Text>
       <Button title="Sair" onPress={fazerLogout} />
     </View>
   );

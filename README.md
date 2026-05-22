@@ -1,14 +1,29 @@
-# Neo-figures
-## 👨‍🏫 Acompanhamento do Projeto
+# NeoFigures - Local env setup
 
-Olá, equipe! Aqui é o **Prof. Washington**. 
+This project uses Expo. Environment variables for Firebase are stored in `.env` and injected into the app via `app.config.js`.
 
-Este repositório está sendo monitorado para avaliação contínua do projeto. O GitHub é a principal ferramenta de vocês para demonstrar a evolução do trabalho e a colaboração da equipe. 
+Setup
 
-Durante o desenvolvimento, estarei acompanhando de perto os seguintes pontos:
-* **Commits e Participação:** A contribuição individual de cada membro da equipe (lembrem-se de "comitar" usando as próprias contas).
-* **Mensagens de Commit:** Clareza sobre o que foi alterado ou adicionado em cada atualização.
-* **Andamento das Sprints:** Se as entregas de código estão alinhadas com o planejamento do nosso backlog e os prazos estabelecidos.
-* **Organização do Código:** Uso de boas práticas de desenvolvimento e organização de arquivos.
+1. Copy the example and fill your keys:
 
-Lembrem-se: o repositório é a vitrine do trabalho de vocês. Mantenham tudo organizado e documentado. Bom trabalho e contem comigo para tirar dúvidas! 🚀
+```powershell
+Copy-Item .env.example .env
+# then edit .env with your values
+```
+
+2. Install `dotenv` if not present:
+
+```powershell
+npm install dotenv --save-dev
+```
+
+3. Start Expo (clear cache recommended):
+
+```powershell
+npx expo start -c
+```
+
+Notes
+
+- `.env` is ignored by git. Do NOT commit your secrets.
+- The runtime code reads variables from `Constants.expoConfig.extra` or `process.env` as a fallback. See `config/firebaseConfig.js`.

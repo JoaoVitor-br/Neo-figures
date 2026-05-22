@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import TelaLogin from './Telas/TelaLogin';
-import TelaCadastro from './Telas/TelaCadastro';
-import TelaHome from './Telas/TelaHome';
+import TelaLogin from './telas/TelaLogin';
+import TelaCadastro from './telas/TelaCadastro';
+import TelaHome from './telas/TelaHome';
 import { onAuthStateChanged } from 'firebase/auth';
-import { autenticacao } from './Config/firebaseConfig';
+import { autenticacao } from './config/firebaseConfig';
 
 const Camadas = createNativeStackNavigator();
 

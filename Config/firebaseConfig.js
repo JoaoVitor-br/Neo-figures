@@ -1,19 +1,39 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import Constants from 'expo-constants';
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Read values first from process.env, then from Expo config extras (for managed app),
+// falling back to undefined if not set. Put your secrets in a local .env or in
+// Expo's `extra` config — never commit `.env` to git.
+const EXTRAS = (Constants && (Constants.expoConfig?.extra || Constants.manifest?.extra)) || {};
+
+const cfg = (key) => process.env[key] ?? EXTRAS[key];
+
 const firebaseConfig = {
-  apiKey: "AIzaSyB4kQkwK86RX-5XpLkduZ4xTZNnMNvbHjQ",
-  authDomain: "neo-figure.firebaseapp.com",
-  projectId: "neo-figure",
-  storageBucket: "neo-figure.firebasestorage.app",
-  messagingSenderId: "634258246445",
-  appId: "1:634258246445:web:4059af830bd38333c321a4",
-  measurementId: "G-HN8XF7FVL5"
+  apiKey: cfg('FIREBASE_API_KEY'),
+  authDomain: cfg('FIREBASE_AUTH_DOMAIN'),
+  projectId: cfg('FIREBASE_PROJECT_ID'),
+  storageBucket: cfg('FIREBASE_STORAGE_BUCKET'),
+  messagingSenderId: cfg('FIREBASE_MESSAGING_SENDER_ID'),
+  appId: cfg('FIREBASE_APP_ID'),
+  measurementId: cfg('FIREBASE_MEASUREMENT_ID'),
 };
 
-// Initialize Firebase
+// Warn if any expected env var is missing (helps debugging without embedding secrets)
+const requiredVars = [
+  'FIREBASE_API_KEY',
+  'FIREBASE_AUTH_DOMAIN',
+  'FIREBASE_PROJECT_ID',
+  'FIREBASE_STORAGE_BUCKET',
+  'FIREBASE_MESSAGING_SENDER_ID',
+  'FIREBASE_APP_ID',
+];
+const missing = requiredVars.filter((k) => !cfg(k));
+if (missing.length) {
+  // eslint-disable-next-line no-console
+  console.warn('Missing Firebase env vars:', missing.join(', '));
+}
+
 const app = initializeApp(firebaseConfig);
 export const autenticacao = getAuth(app);
