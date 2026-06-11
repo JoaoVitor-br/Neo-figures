@@ -12,12 +12,15 @@ import { signOut } from 'firebase/auth';
 import { autenticacao } from '../config/firebaseConfig';
 
 const produtos = [
-  { id: '1', nome: 'Nome do produto', preco: 'R$67,00', imagem: 'https://images.unsplash.com/photo-1584251050232-f1c070a4ca6c?auto=format&fit=crop&w=800&q=80' },
-  { id: '2', nome: 'Nome do produto', preco: 'R$67,00', imagem: 'https://images.unsplash.com/photo-1616628182805-bd5f5f537f71?auto=format&fit=crop&w=800&q=80' },
-  { id: '3', nome: 'Nome do produto', preco: 'R$67,00', imagem: 'https://images.unsplash.com/photo-1595535878079-4dbb2a678481?auto=format&fit=crop&w=800&q=80' },
-  { id: '4', nome: 'Nome do produto', preco: 'R$67,00', imagem: 'https://images.unsplash.com/photo-1600172454585-e05c3e99c30f?auto=format&fit=crop&w=800&q=80' },
-  { id: '5', nome: 'Nome do produto', preco: 'R$67,00', imagem: 'https://images.unsplash.com/photo-1602526216487-7d29d18ad215?auto=format&fit=crop&w=800&q=80' },
-  { id: '6', nome: 'Nome do produto', preco: 'R$67,00', imagem: 'https://images.unsplash.com/photo-1616628191050-1051b3f0eae1?auto=format&fit=crop&w=800&q=80' },
+  { id: '1', nome: 'Coisa Teto', preco: 'R$67,00', imagem: require('../imagens/CoisaTeto-03.webp') },
+  { id: '2', nome: 'Fallout Toy', preco: 'R$67,00', imagem: require('../imagens/falloutToy-01.jpg') },
+  { id: '3', nome: 'Funko Steven', preco: 'R$67,00', imagem: require('../imagens/funkoSteven-04.png') },
+  { id: '4', nome: 'Mangle', preco: 'R$67,00', imagem: require('../imagens/Mangle-05.jpg') },
+  { id: '5', nome: 'Sayori', preco: 'R$67,00', imagem: require('../imagens/Sayori-06.jpg') },
+  { id: '6', nome: 'Silksong', preco: 'R$67,00', imagem: require('../imagens/silksong.png') },
+  { id: '7', nome: 'Aang', preco: 'R$67,00', imagem: require('../imagens/aange.webp') },
+  { id: '8', nome: 'Zumbi Fallout', preco: 'R$67,00', imagem: require('../imagens/zumbiFallout-02.png') },
+
 ];
 
 export default function TelaHome() {
@@ -27,7 +30,9 @@ export default function TelaHome() {
 
   const Linha = ({ nome, preco, imagem }) => (
     <View style={estilos.cardProduto}>
-      <Image source={{ uri: imagem }} style={estilos.imagemProduto} />
+      <View style={estilos.produto}>
+        <Image source={imagem} style={estilos.imagemProduto} resizeMode="cover" />
+      </View>
       <View style={estilos.rodapeProduto}>
         <View>
           <Text style={estilos.nomeProduto}>{nome}</Text>
@@ -110,9 +115,19 @@ const estilos = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
     elevation: 4,
   },
-  imagemProduto: {
+  produto: {
+    height: 160,
+    overflow: 'hidden',
     width: '100%',
-    height: 120,
+    position: 'relative',
+  },
+  imagemProduto: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    width: '100%',
+    height: 300,
   },
   rodapeProduto: {
     flexDirection: 'row',
