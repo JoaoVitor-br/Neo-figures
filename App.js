@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TelaLogin from './telas/TelaLogin';
 import TelaCadastro from './telas/TelaCadastro';
 import TelaHome from './telas/TelaHome';
+import TelaDetalheProduto from './telas/TelaDetalheProduto';
 import { onAuthStateChanged } from 'firebase/auth';
 import { autenticacao } from './config/firebaseConfig';
 
@@ -23,7 +24,10 @@ export default function App() {
     <NavigationContainer>
       <Camadas.Navigator>
         {usuario ? (
-          <Camadas.Screen name="Home" component={TelaHome} />
+          <>
+            <Camadas.Screen name="Home" component={TelaHome} />
+            <Camadas.Screen name="Detalhe" component={TelaDetalheProduto} />
+          </>
         ) : (
           <>
             <Camadas.Screen name="Login" component={TelaLogin} />

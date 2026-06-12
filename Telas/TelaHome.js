@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { signOut } from 'firebase/auth';
 import { autenticacao } from '../config/firebaseConfig';
+import paleta from '../config/paletaCores';
 
 const produtos = [
   { id: '1', nome: 'Coisa Teto', preco: 'R$67,00', imagem: require('../imagens/CoisaTeto-03.webp') },
@@ -23,13 +24,24 @@ const produtos = [
 
 ];
 
-export default function TelaHome() {
+export default function TelaHome({ navigation }) {
   const fazerLogout = () => {
     signOut(autenticacao);
   };
 
   const Linha = ({ nome, preco, imagem }) => (
-    <View style={estilos.cardProduto}>
+    <TouchableOpacity
+      style={estilos.cardProduto}
+      onPress={() =>
+        navigation.navigate('Detalhe', {
+          produto: {
+            Produto: nome,
+            Preço: preco,
+            Foto: imagem,
+          },
+        })
+      }
+    >
       <View style={estilos.produto}>
         <Image source={imagem} style={estilos.imagemProduto} resizeMode="cover" />
       </View>
@@ -42,7 +54,7 @@ export default function TelaHome() {
           <Text style={estilos.favoritoTexto}>💗</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -80,7 +92,7 @@ export default function TelaHome() {
 const estilos = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7F4FF',
+    backgroundColor: paleta.background,
     alignItems: 'center',
     paddingHorizontal: 18,
     paddingTop: 22,
@@ -88,13 +100,13 @@ const estilos = StyleSheet.create({
   titulo: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#7F5CFF',
+    color: paleta.primary,
     marginBottom: 16,
   },
   areaProdutos: {
     flex: 1,
     width: '100%',
-    backgroundColor: '#ECE3FF',
+    backgroundColor: paleta.surface,
     borderRadius: 28,
     padding: 16,
   },
@@ -108,8 +120,8 @@ const estilos = StyleSheet.create({
     width: '48%',
     overflow: 'hidden',
     borderWidth: 2,
-    borderColor: '#7F5CFF',
-    shadowColor: '#7F5CFF',
+    borderColor: paleta.primary,
+    shadowColor: paleta.primary,
     shadowOpacity: 0.12,
     shadowRadius: 12,
     shadowOffset: { width: 0, height: 8 },
@@ -165,7 +177,7 @@ const estilos = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 20,
     marginTop: 14,
-    backgroundColor: '#7F5CFF',
+    backgroundColor: paleta.primary,
     borderRadius: 24,
   },
   iconeNav: {
@@ -178,18 +190,18 @@ const estilos = StyleSheet.create({
   },
   iconeTexto: {
     fontSize: 22,
-    color: '#FFFFFF',
+    color: paleta.white,
   },
   botaoSair: {
     marginTop: 12,
-    backgroundColor: '#FF8C42',
+    backgroundColor: paleta.accent || '#FF8C42',
     borderRadius: 18,
     paddingVertical: 14,
     alignItems: 'center',
     width: '100%',
   },
   botaoSairTexto: {
-    color: '#FFFFFF',
+    color: paleta.white,
     fontWeight: '700',
     fontSize: 16,
   },
