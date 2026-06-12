@@ -72,7 +72,7 @@ export default function TelaHome({ navigation }) {
       </View>
 
       <View style={estilos.bottomBar}>
-        <TouchableOpacity style={estilos.iconeNav}>
+        <TouchableOpacity style={estilos.iconeNav} onPress={() => navigation.navigate('Favoritos')}>
           <Text style={estilos.iconeTexto}>♥</Text>
         </TouchableOpacity>
         <TouchableOpacity style={estilos.iconeNavCentral}>
