@@ -13,7 +13,7 @@ import {
   Platform,
   SafeAreaView,
 } from 'react-native';
-import { bancoDados } from '../config/firebaseConfig';
+import { bancoDados,onAuth } from '../config/firebaseConfig';
 import { collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 
 const camposIniciais = {

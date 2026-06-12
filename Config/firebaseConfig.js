@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 import Constants from 'expo-constants';
 
 // Read values first from process.env, then from Expo config extras (for managed app),
@@ -37,3 +39,5 @@ if (missing.length) {
 
 const app = initializeApp(firebaseConfig);
 export const autenticacao = getAuth(app);
+export const bancoDados = getFirestore(app);
+export const armazenamento = getStorage(app);
