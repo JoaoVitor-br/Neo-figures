@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,51 +7,79 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
+  ActivityIndicator,
 } from 'react-native';
 import { signOut } from 'firebase/auth';
-import { autenticacao } from '../config/firebaseConfig';
+import { autenticacao, bancoDados } from '../config/firebaseConfig';
+import { collection, onSnapshot } from 'firebase/firestore';
 import paleta from '../config/paletaCores';
 
-const produtos = [
-  { id: '1', nome: 'Coisa Teto', preco: 'R$67,00', imagem: require('../imagens/CoisaTeto-03.webp') },
-  { id: '2', nome: 'Fallout Toy', preco: 'R$67,00', imagem: require('../imagens/falloutToy-01.jpg') },
-  { id: '3', nome: 'Funko Steven', preco: 'R$67,00', imagem: require('../imagens/funkoSteven-04.png') },
-  { id: '4', nome: 'Mangle', preco: 'R$67,00', imagem: require('../imagens/Mangle-05.jpg') },
-  { id: '5', nome: 'Sayori', preco: 'R$67,00', imagem: require('../imagens/Sayori-06.jpg') },
-  { id: '6', nome: 'Silksong', preco: 'R$67,00', imagem: require('../imagens/silksong.png') },
-  { id: '7', nome: 'Aang', preco: 'R$67,00', imagem: require('../imagens/aange.webp') },
-  { id: '8', nome: 'Zumbi Fallout', preco: 'R$67,00', imagem: require('../imagens/zumbiFallout-02.png') },
-
-];
+const iconeFavoritos = require('../imagens/icons/solar_heart-bold.png');
+const iconeCarrinho = require('../imagens/icons/material-symbols_shopping-cart-rounded.png');
+const iconeAdmin = require('../imagens/icons/Frame.png');
 
 export default function TelaHome({ navigation }) {
+  const [produtos, setProdutos] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+
+  useEffect(() => {
+    const produtosRef = collection(bancoDados, 'produtos');
+    const desinscrever = onSnapshot(
+      produtosRef,
+      (querySnapshot) => {
+        const lista = [];
+        querySnapshot.forEach((docSnap) => {
+          lista.push({ id: docSnap.id, ...docSnap.data() });
+        });
+        setProdutos(lista);
+        setCarregando(false);
+      },
+      (erro) => {
+        console.error('Erro ao carregar produtos:', erro);
+        setCarregando(false);
+      }
+    );
+
+    return desinscrever;
+  }, []);
+
   const fazerLogout = () => {
     signOut(autenticacao);
   };
 
-  const Linha = ({ nome, preco, imagem }) => (
+  const Linha = ({ item }) => (
     <TouchableOpacity
       style={estilos.cardProduto}
       onPress={() =>
         navigation.navigate('Detalhe', {
           produto: {
-            Produto: nome,
-            Preço: preco,
-            Foto: imagem,
+            Produto: item.Produto || item.nome || 'Produto',
+            Preço: item.Preço || item.preco || 'R$0,00',
+            Foto: item.Foto || item.imagem || item.Foto2 || item.Foto3 || item.Foto || undefined,
           },
         })
       }
     >
       <View style={estilos.produto}>
-        <Image source={imagem} style={estilos.imagemProduto} resizeMode="cover" />
+        <Image
+          source={
+            item.Foto
+              ? { uri: item.Foto }
+              : item.imagem
+              ? item.imagem
+              : require('../imagens/CoisaTeto-03.webp')
+          }
+          style={estilos.imagemProduto}
+          resizeMode="cover"
+        />
       </View>
       <View style={estilos.rodapeProduto}>
         <View>
-          <Text style={estilos.nomeProduto}>{nome}</Text>
-          <Text style={estilos.precoProduto}>{preco}</Text>
+          <Text style={estilos.nomeProduto}>{item.Produto || item.nome}</Text>
+          <Text style={estilos.precoProduto}>{item.Preço || item.preco}</Text>
         </View>
         <View style={estilos.favoritoBadge}>
-          <Text style={estilos.favoritoTexto}>💗</Text>
+          <Image source={iconeFavoritos} style={estilos.iconeImagem} resizeMode="contain" />
         </View>
       </View>
     </TouchableOpacity>
@@ -61,27 +89,41 @@ export default function TelaHome({ navigation }) {
     <SafeAreaView style={estilos.container}>
       <Text style={estilos.titulo}>Neo Figures</Text>
       <View style={estilos.areaProdutos}>
-        <FlatList
-          data={produtos}
-          renderItem={({ item }) => <Linha {...item} />}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          columnWrapperStyle={estilos.linhaCards}
-          showsVerticalScrollIndicator={false}
-        />
+        {carregando ? (
+          <View style={estilos.centralizado}>
+            <ActivityIndicator size="large" color={paleta.primary} />
+            <Text style={estilos.carregandoTexto}>Carregando produtos...</Text>
+          </View>
+        ) : produtos.length === 0 ? (
+          <View style={estilos.centralizado}>
+            <Text style={estilos.semProdutosTexto}>Nenhum produto disponível.</Text>
+          </View>
+        ) : (
+          <FlatList
+            data={produtos}
+            renderItem={(item) => <Linha {...item} />}
+            keyExtractor={(item) => item.id}
+            numColumns={2}
+            columnWrapperStyle={estilos.linhaCards}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
       </View>
 
       <View style={estilos.bottomBar}>
         <TouchableOpacity style={estilos.iconeNav} onPress={() => navigation.navigate('Favoritos')}>
-          <Text style={estilos.iconeTexto}>♥</Text>
+          <Image source={iconeFavoritos} style={estilos.iconeImagem} resizeMode="contain" />
         </TouchableOpacity>
-        <TouchableOpacity style={estilos.iconeNavCentral}>
-          <Text style={estilos.iconeTexto}>🛒</Text>
+        <TouchableOpacity style={estilos.iconeNavCentral} onPress={() => {/* ação de carrinho futura */}}>
+          <Image source={iconeCarrinho} style={estilos.iconeImagemCentral} resizeMode="contain" />
         </TouchableOpacity>
         <TouchableOpacity style={estilos.iconeNav} onPress={() => navigation.navigate('Admin')}>
-          <Text style={estilos.iconeTexto}>⚙️</Text>
+          <Image source={iconeAdmin} style={estilos.iconeImagem} resizeMode="contain" />
         </TouchableOpacity>
       </View>
+      <TouchableOpacity style={estilos.botaoPerfil} onPress={() => navigation.navigate('Perfil')}>
+        <Text style={estilos.botaoPerfilTexto}>Perfil</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={estilos.botaoSair} onPress={fazerLogout}>
         <Text style={estilos.botaoSairTexto}>Sair</Text>
       </TouchableOpacity>
@@ -169,6 +211,21 @@ const estilos = StyleSheet.create({
   favoritoTexto: {
     fontSize: 16,
   },
+  centralizado: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 30,
+  },
+  carregandoTexto: {
+    marginTop: 12,
+    color: paleta.primary,
+    fontSize: 16,
+  },
+  semProdutosTexto: {
+    color: paleta.muted,
+    fontSize: 16,
+  },
   bottomBar: {
     width: '100%',
     flexDirection: 'row',
@@ -188,6 +245,16 @@ const estilos = StyleSheet.create({
     backgroundColor: '#0D0D1A',
     borderRadius: 16,
   },
+  iconeImagem: {
+    width: 24,
+    height: 24,
+    tintColor: paleta.white,
+  },
+  iconeImagemCentral: {
+    width: 30,
+    height: 30,
+    tintColor: paleta.white,
+  },
   iconeTexto: {
     fontSize: 22,
     color: paleta.white,
@@ -204,5 +271,18 @@ const estilos = StyleSheet.create({
     color: paleta.white,
     fontWeight: '700',
     fontSize: 16,
+  },
+  botaoPerfil: {
+    marginTop: 12,
+    backgroundColor: paleta.primaryDark || '#6b46e7',
+    borderRadius: 18,
+    paddingVertical: 12,
+    alignItems: 'center',
+    width: '100%',
+  },
+  botaoPerfilTexto: {
+    color: paleta.white,
+    fontWeight: '700',
+    fontSize: 15,
   },
 });

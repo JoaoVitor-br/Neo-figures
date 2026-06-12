@@ -62,44 +62,44 @@ export default function TelaAdmin({ navigation }) {
     setCarregando(true);
     try {
       const produtosRef = collection(bancoDados, 'produtos');
-      const produtosExemplo = [
-        {
-          Produto: 'Smartphone Quantum X',
-          Preço: '1599.90',
-          Descrição: 'Smartphone com tela AMOLED de 6.7 polegadas, 128GB de armazenamento e câmera quádrupla de 64MP.',
-          Foto: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-          ValorNormal: '1999.90',
-          ValorDesconto: '400.00',
-          Desconto: '20%',
-        },
-        {
-          Produto: 'Notebook Gamer Pro',
-          Preço: '4599.00',
-          Descrição: 'Processador de última geração, 16GB RAM, SSD 512GB e placa de vídeo dedicada de 4GB.',
-          Foto: 'https://images.unsplash.com/photo-1496181130204-755241544e3f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-          ValorNormal: '5499.00',
-          ValorDesconto: '900.00',
-          Desconto: '16%',
-        },
-        {
-          Produto: 'Fone Noise Cancelling',
-          Preço: '299.90',
-          Descrição: 'Fones de ouvido over-ear sem fio com cancelamento de ruído ativo e bateria de 40 horas.',
-          Foto: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-          ValorNormal: '499.90',
-          ValorDesconto: '200.00',
-          Desconto: '40%',
-        },
-        {
-          Produto: 'Smartwatch Sport Fit',
-          Preço: '189.90',
-          Descrição: 'Monitor de ritmo cardíaco, GPS integrado, resistente à água e múltiplos modos esportivos.',
-          Foto: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-          ValorNormal: '269.90',
-          ValorDesconto: '80.00',
-          Desconto: '30%',
-        },
-      ];
+      // const produtosExemplo = [
+      //   {
+      //     Produto: 'Smartphone Quantum X',
+      //     Preço: '1599.90',
+      //     Descrição: 'Smartphone com tela AMOLED de 6.7 polegadas, 128GB de armazenamento e câmera quádrupla de 64MP.',
+      //     Foto: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
+      //     ValorNormal: '1999.90',
+      //     ValorDesconto: '400.00',
+      //     Desconto: '20%',
+      //   },
+      //   {
+      //     Produto: 'Notebook Gamer Pro',
+      //     Preço: '4599.00',
+      //     Descrição: 'Processador de última geração, 16GB RAM, SSD 512GB e placa de vídeo dedicada de 4GB.',
+      //     Foto: 'https://images.unsplash.com/photo-1496181130204-755241544e3f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
+      //     ValorNormal: '5499.00',
+      //     ValorDesconto: '900.00',
+      //     Desconto: '16%',
+      //   },
+      //   {
+      //     Produto: 'Fone Noise Cancelling',
+      //     Preço: '299.90',
+      //     Descrição: 'Fones de ouvido over-ear sem fio com cancelamento de ruído ativo e bateria de 40 horas.',
+      //     Foto: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
+      //     ValorNormal: '499.90',
+      //     ValorDesconto: '200.00',
+      //     Desconto: '40%',
+      //   },
+      //   {
+      //     Produto: 'Smartwatch Sport Fit',
+      //     Preço: '189.90',
+      //     Descrição: 'Monitor de ritmo cardíaco, GPS integrado, resistente à água e múltiplos modos esportivos.',
+      //     Foto: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
+      //     ValorNormal: '269.90',
+      //     ValorDesconto: '80.00',
+      //     Desconto: '30%',
+      //   },
+      // ];
 
       for (const prod of produtosExemplo) {
         await addDoc(produtosRef, prod);
