@@ -78,8 +78,8 @@ export default function TelaHome({ navigation }) {
         <TouchableOpacity style={estilos.iconeNavCentral}>
           <Text style={estilos.iconeTexto}>🛒</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={estilos.iconeNav}>
-          <Text style={estilos.iconeTexto}>📦</Text>
+        <TouchableOpacity style={estilos.iconeNav} onPress={() => navigation.navigate('Admin')}>
+          <Text style={estilos.iconeTexto}>⚙️</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={estilos.botaoSair} onPress={fazerLogout}>
