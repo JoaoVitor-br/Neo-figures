@@ -16,6 +16,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { updateProfile } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RodapeNavegacao from './RodapeNavegacao';
 const camposIniciais = {
 nome: '',
 sobrenome: '',
@@ -25,7 +26,7 @@ cidade: '',
 estado: '',
 cep: '',
 telefone: '',
-};export default function TelaPerfil() {
+};export default function TelaPerfil({ navigation }) {
 const [perfil, setPerfil] = useState(camposIniciais);
 const [photoUrl, setPhotoUrl] = useState(null);
 const [localImage, setLocalImage] = useState(null);
@@ -192,6 +193,7 @@ return (
 </View>
 );
 }return (
+<View style={{ flex: 1 }}>
 <ScrollView contentContainerStyle={estilos.container}>
 <Text style={estilos.titulo}>Perfil do Usuário</Text>
 <View style={estilos.avatarContainer}>
@@ -266,6 +268,8 @@ keyboardType="phone-pad"
 <Button title="Editar Perfil" onPress={() => setEditando(true)} />
 )}
 </ScrollView>
+<RodapeNavegacao navigation={navigation} />
+</View>
 );
 }const estilos = StyleSheet.create({
 container: {

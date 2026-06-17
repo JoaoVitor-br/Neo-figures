@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native';
+import RodapeNavegacao from './RodapeNavegacao';
 
 const FAVS = [
   { id: '1', nome: 'Action Figure Mario Bros', preco: 'R$ 67,00', img: 'https://images.unsplash.com/photo-1601987177651-8edfe6c20009?w=150' },
 ];
 
-export default function TelaFavoritos() {
+export default function TelaFavoritos({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Meus Favoritos</Text>
@@ -27,6 +28,7 @@ export default function TelaFavoritos() {
       ) : (
         <Text style={styles.vazio}>Nenhum item favoritado.</Text>
       )}
+      <RodapeNavegacao navigation={navigation} />
     </View>
   );
 }

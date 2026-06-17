@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { bancoDados,onAuth } from '../config/firebaseConfig';
 import { collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import RodapeNavegacao from './RodapeNavegacao';
 
 const camposIniciais = {
   Produto: '',
@@ -388,6 +389,7 @@ export default function TelaAdmin({ navigation }) {
           />
         )}
       </KeyboardAvoidingView>
+      <RodapeNavegacao navigation={navigation} />
     </SafeAreaView>
   );
 }

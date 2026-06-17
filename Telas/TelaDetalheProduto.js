@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {View,Text,Image,StyleSheet,ScrollView,TouchableOpacity,Dimensions,Alert,SafeAreaView,
 } from 'react-native';
 import paleta from '../config/paletaCores';
+import RodapeNavegacao from './RodapeNavegacao';
 
 const { width } = Dimensions.get('window'); export default function TelaDetalheProduto({ route, navigation }) {
     const { produto } = route.params;
@@ -155,6 +156,7 @@ const { width } = Dimensions.get('window'); export default function TelaDetalheP
                     </View>
                 </View>
             </ScrollView>
+            <RodapeNavegacao navigation={navigation} />
         </SafeAreaView>
     );
 } const estilos = StyleSheet.create({
