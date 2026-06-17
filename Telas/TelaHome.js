@@ -13,10 +13,7 @@ import { signOut } from 'firebase/auth';
 import { autenticacao, bancoDados } from '../config/firebaseConfig';
 import { collection, onSnapshot } from 'firebase/firestore';
 import paleta from '../config/paletaCores';
-
-const iconeFavoritos = require('../imagens/icons/solar_heart-bold.png');
-const iconeCarrinho = require('../imagens/icons/material-symbols_shopping-cart-rounded.png');
-const iconeAdmin = require('../imagens/icons/Frame.png');
+import RodapeNavegacao from './RodapeNavegacao';
 
 export default function TelaHome({ navigation }) {
   const [produtos, setProdutos] = useState([]);
@@ -110,17 +107,7 @@ export default function TelaHome({ navigation }) {
         )}
       </View>
 
-      <View style={estilos.bottomBar}>
-        <TouchableOpacity style={estilos.iconeNav} onPress={() => navigation.navigate('Favoritos')}>
-          <Image source={iconeFavoritos} style={estilos.iconeImagem} resizeMode="contain" />
-        </TouchableOpacity>
-        <TouchableOpacity style={estilos.iconeNavCentral} onPress={() => {/* ação de carrinho futura */}}>
-          <Image source={iconeCarrinho} style={estilos.iconeImagemCentral} resizeMode="contain" />
-        </TouchableOpacity>
-        <TouchableOpacity style={estilos.iconeNav} onPress={() => navigation.navigate('Admin')}>
-          <Image source={iconeAdmin} style={estilos.iconeImagem} resizeMode="contain" />
-        </TouchableOpacity>
-      </View>
+      <RodapeNavegacao navigation={navigation} />
       <TouchableOpacity style={estilos.botaoPerfil} onPress={() => navigation.navigate('Perfil')}>
         <Text style={estilos.botaoPerfilTexto}>Perfil</Text>
       </TouchableOpacity>
