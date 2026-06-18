@@ -3,12 +3,12 @@ import {
 View,
 Text,
 TextInput,
-Button,
 Image,
 StyleSheet,
 ScrollView,
 ActivityIndicator,
 Alert,
+TouchableOpacity,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { autenticacao, bancoDados, armazenamento } from '../config/firebaseConfig';
@@ -193,9 +193,16 @@ return (
 </View>
 );
 }return (
-<View style={{ flex: 1 }}>
-<ScrollView contentContainerStyle={estilos.container}>
-<Text style={estilos.titulo}>Perfil do Usuário</Text>
+<View style={estilos.tela}>
+<ScrollView contentContainerStyle={estilos.container} keyboardShouldPersistTaps="handled">
+<View style={estilos.card}>
+<Text style={estilos.titulo}>sua conta</Text>
+<View style={estilos.topRow}>
+<TouchableOpacity
+style={estilos.avatarWrapper}
+activeOpacity={0.75}
+onPress={editando ? selecionarFoto : undefined}
+>
 <View style={estilos.avatarContainer}>
 {localImage ? (
 <Image source={{ uri: localImage }} style={estilos.avatar} />
@@ -206,106 +213,233 @@ return (
 <Text style={estilos.avatarTexto}>Foto</Text>
 </View>
 )}
-</View>{editando && (
-<Button title="Alterar Foto" onPress={selecionarFoto} />
-)}<Text>Nome</Text>
+</View>
+</TouchableOpacity>
+<View style={estilos.fieldsColumn}>
+<Text style={estilos.label}>nome:</Text>
 <TextInput
 style={estilos.input}
+placeholder="Digite seu nome"
+placeholderTextColor="#8b72f1"
 value={perfil.nome}
 onChangeText={(valor) => atualizarCampo('nome', valor)}
 editable={editando}
-/><Text>Sobrenome</Text>
+/>
+<Text style={estilos.label}>sobrenome:</Text>
 <TextInput
 style={estilos.input}
+placeholder="Digite seu sobrenome"
+placeholderTextColor="#8b72f1"
 value={perfil.sobrenome}
 onChangeText={(valor) => atualizarCampo('sobrenome', valor)}
 editable={editando}
-/><Text>Rua</Text>
+/>
+<Text style={estilos.label}>rua:</Text>
 <TextInput
 style={estilos.input}
+placeholder="Digite sua rua"
+placeholderTextColor="#8b72f1"
 value={perfil.rua}
 onChangeText={(valor) => atualizarCampo('rua', valor)}
 editable={editando}
-/><Text>Bairro</Text>
+/>
+</View>
+</View>
+<Text style={estilos.label}>bairro:</Text>
 <TextInput
 style={estilos.input}
+placeholder="Digite seu bairro"
+placeholderTextColor="#8b72f1"
 value={perfil.bairro}
 onChangeText={(valor) => atualizarCampo('bairro', valor)}
 editable={editando}
-/><Text>Cidade</Text>
+/>
+<Text style={estilos.label}>cidade:</Text>
 <TextInput
 style={estilos.input}
+placeholder="Digite sua cidade"
+placeholderTextColor="#8b72f1"
 value={perfil.cidade}
 onChangeText={(valor) => atualizarCampo('cidade', valor)}
 editable={editando}
-/><Text>Estado</Text>
+/>
+<Text style={estilos.label}>estado:</Text>
 <TextInput
 style={estilos.input}
+placeholder="Digite seu estado"
+placeholderTextColor="#8b72f1"
 value={perfil.estado}
 onChangeText={(valor) => atualizarCampo('estado', valor)}
 editable={editando}
-/><Text>CEP</Text>
+/>
+<Text style={estilos.label}>cep:</Text>
 <TextInput
 style={estilos.input}
+placeholder="Digite seu CEP"
+placeholderTextColor="#8b72f1"
 value={perfil.cep}
 onChangeText={(valor) => atualizarCampo('cep', valor)}
 editable={editando}
 keyboardType="numeric"
-/><Text>Telefone celular</Text>
+/>
+<Text style={estilos.label}>telefone:</Text>
 <TextInput
 style={estilos.input}
+placeholder="Digite seu telefone"
+placeholderTextColor="#8b72f1"
 value={perfil.telefone}
 onChangeText={(valor) => atualizarCampo('telefone', valor)}
 editable={editando}
 keyboardType="phone-pad"
-/>{editando ? (
+/>
+<View style={estilos.buttonGroup}>
+{editando ? (
 <>
-<Button title={salvando ? 'Salvando...' : 'Salvar Perfil'} onPress={salvarPerfil} disabled={salvando} />
-<View style={estilos.espaco} />
-<Button title="Cancelar" onPress={() => setEditando(false)} />
+<TouchableOpacity
+style={[estilos.button, estilos.primaryButton]}
+onPress={salvarPerfil}
+disabled={salvando}
+>
+<Text style={estilos.buttonText}>{salvando ? 'salvando...' : 'salvar'}</Text>
+</TouchableOpacity>
+<TouchableOpacity
+style={[estilos.button, estilos.secondaryButton]}
+onPress={() => setEditando(false)}
+>
+<Text style={estilos.secondaryButtonText}>cancelar</Text>
+</TouchableOpacity>
 </>
 ) : (
-<Button title="Editar Perfil" onPress={() => setEditando(true)} />
+<TouchableOpacity
+style={[estilos.button, estilos.primaryButton]}
+onPress={() => setEditando(true)}
+>
+<Text style={estilos.buttonText}>editar perfil</Text>
+</TouchableOpacity>
 )}
+</View>
+</View>
 </ScrollView>
 <RodapeNavegacao navigation={navigation} />
 </View>
 );
 }const estilos = StyleSheet.create({
+tela: {
+flex: 1,
+backgroundColor: '#E8E0FF',
+},
 container: {
 padding: 20,
+paddingBottom: 30,
+},
+card: {
+backgroundColor: '#F5EEFF',
+borderRadius: 32,
+padding: 22,
+shadowColor: '#7B61FF',
+shadowOffset: { width: 0, height: 12 },
+shadowOpacity: 0.08,
+shadowRadius: 16,
+elevation: 5,
 },
 titulo: {
-fontSize: 24,
-fontWeight: 'bold',
+fontSize: 28,
+fontWeight: '700',
 marginBottom: 20,
 textAlign: 'center',
+color: '#2D0F68',
+textTransform: 'lowercase',
 },
-input: {
-borderWidth: 1,
-borderColor: '#ccc',
-borderRadius: 8,
-marginBottom: 12,
-padding: 10,
+topRow: {
+flexDirection: 'row',
+alignItems: 'flex-start',
 },
-avatarContainer: {
-alignItems: 'center',
-marginBottom: 20,
-},
-avatar: {
-width: 130,
-height: 130,
-borderRadius: 65,
-marginBottom: 12,
-},
-avatarVazio: {
-backgroundColor: '#ddd',
+avatarWrapper: {
+width: 132,
+height: 132,
+borderRadius: 28,
+borderWidth: 2,
+borderColor: '#8B72F1',
+backgroundColor: '#FFFFFF',
 justifyContent: 'center',
 alignItems: 'center',
 },
+avatarContainer: {
+width: 120,
+height: 120,
+borderRadius: 24,
+justifyContent: 'center',
+alignItems: 'center',
+},
+avatar: {
+width: 120,
+height: 120,
+borderRadius: 24,
+},
+avatarVazio: {
+backgroundColor: '#F0ECFF',
+justifyContent: 'center',
+alignItems: 'center',
+paddingHorizontal: 10,
+},
 avatarTexto: {
-color: '#555',
+color: '#6A4BFF',
+fontSize: 14,
+fontWeight: '600',
+textAlign: 'center',
+},
+avatarIcon: {
+color: '#6A4BFF',
+fontSize: 28,
+marginTop: 8,
+},
+fieldsColumn: {
+flex: 1,
+marginLeft: 16,
+},
+label: {
+fontSize: 13,
+fontWeight: '600',
+color: '#5C3BBA',
+marginBottom: 6,
+},
+input: {
+backgroundColor: '#F4E8FF',
+borderRadius: 24,
+paddingVertical: 14,
+paddingHorizontal: 18,
+marginBottom: 16,
 fontSize: 16,
+color: '#2C1A62',
+},
+buttonGroup: {
+marginTop: 10,
+},
+button: {
+paddingVertical: 16,
+borderRadius: 24,
+alignItems: 'center',
+marginBottom: 12,
+},
+primaryButton: {
+backgroundColor: '#6F4DFF',
+},
+secondaryButton: {
+backgroundColor: '#FFFFFF',
+borderWidth: 1,
+borderColor: '#6F4DFF',
+},
+buttonText: {
+color: '#FFFFFF',
+fontSize: 16,
+fontWeight: '700',
+textTransform: 'uppercase',
+},
+secondaryButtonText: {
+color: '#6F4DFF',
+fontSize: 16,
+fontWeight: '700',
+textTransform: 'uppercase',
 },
 centralizado: {
 flex: 1,
