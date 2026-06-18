@@ -11,9 +11,10 @@ import {
 } from 'react-native';
 import { signOut } from 'firebase/auth';
 import { autenticacao, bancoDados } from '../config/firebaseConfig';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 import paleta from '../config/paletaCores';
 import RodapeNavegacao from './RodapeNavegacao';
+const iconeFavoritos = require('../imagens/icons/solar_heart-bold.png');
 
 export default function TelaHome({ navigation }) {
   const [produtos, setProdutos] = useState([]);
@@ -44,19 +45,31 @@ export default function TelaHome({ navigation }) {
     signOut(autenticacao);
   };
 
-  const Linha = ({ item }) => (
-    <TouchableOpacity
-      style={estilos.cardProduto}
-      onPress={() =>
-        navigation.navigate('Detalhe', {
-          produto: {
-            Produto: item.Produto || item.nome || 'Produto',
-            Preço: item.Preço || item.preco || 'R$0,00',
-            Foto: item.Foto || item.imagem || item.Foto2 || item.Foto3 || item.Foto || undefined,
-          },
-        })
-      }
-    >
+  const toggleFavorito = async (item) => {
+    const produtoRef = doc(bancoDados, 'produtos', item.id);
+    const valorAtual = item.favorito === true || item.Favorito === true || item.fav === true;
+    try {
+      await updateDoc(produtoRef, { favorito: !valorAtual });
+    } catch (erro) {
+      console.error('Erro ao atualizar favorito:', erro);
+    }
+  };
+
+  const Linha = ({ item }) => {
+    const itemFavorito = item.favorito === true || item.Favorito === true || item.fav === true;
+    return (
+      <TouchableOpacity
+        style={estilos.cardProduto}
+        onPress={() =>
+          navigation.navigate('Detalhe', {
+            produto: {
+              Produto: item.Produto || item.nome || 'Produto',
+              Preço: item.Preço || item.preco || 'R$0,00',
+              Foto: item.Foto || item.imagem || item.Foto2 || item.Foto3 || item.Foto || undefined,
+            },
+          })
+        }
+      >
       <View style={estilos.produto}>
         <Image
           source={
@@ -73,14 +86,22 @@ export default function TelaHome({ navigation }) {
       <View style={estilos.rodapeProduto}>
         <View>
           <Text style={estilos.nomeProduto}>{item.Produto || item.nome}</Text>
-          <Text style={estilos.precoProduto}>{item.Preço || item.preco}</Text>
+          <Text style={estilos.precoProduto}>{item.Preço || item.preco}</Text>
         </View>
-        <View style={estilos.favoritoBadge}>
-          <Image source={iconeFavoritos} style={estilos.iconeImagem} resizeMode="contain" />
-        </View>
+        <TouchableOpacity
+          style={[estilos.favoritoBadge, itemFavorito ? estilos.favoritoAtivo : null]}
+          onPress={() => toggleFavorito(item)}
+        >
+          <Image
+            source={iconeFavoritos}
+            style={[estilos.iconeImagem, itemFavorito ? estilos.iconeFavoritoAtivo : estilos.iconeFavorito]}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
+  };
 
   return (
     <SafeAreaView style={estilos.container}>
@@ -194,6 +215,19 @@ const estilos = StyleSheet.create({
     backgroundColor: '#FFE6F0',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  favoritoAtivo: {
+    backgroundColor: '#ff4562',
+  },
+  iconeFavorito: {
+    width: 20,
+    height: 20,
+    tintColor: '#94a3b8',
+  },
+  iconeFavoritoAtivo: {
+    width: 20,
+    height: 20,
+    tintColor: '#FFFFFF',
   },
   favoritoTexto: {
     fontSize: 16,
