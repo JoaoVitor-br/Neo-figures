@@ -6,6 +6,7 @@ import RodapeNavegacao from './RodapeNavegacao';
 
 const { width } = Dimensions.get('window'); export default function TelaDetalheProduto({ route, navigation }) {
     const { produto } = route.params;
+    const Descricao = produto.Descricao || produto.Descrição || 'Nenhuma descrição disponível para este produto.';
     const [quantidade, setQuantidade] = useState(1);
     const [imagemAtiva, setImagemAtiva] = useState(0);// Garantir que temos 3 fotos para o carrossel usando fallbacks se necessário
     const fotos = [
@@ -107,8 +108,8 @@ const { width } = Dimensions.get('window'); export default function TelaDetalheP
                 </View>{/* Detalhes do Produto */}
                 <View style={estilos.detalhesContainer}>
                     <Text style={estilos.nome}>{produto.Produto}</Text>
-                    {produto.Descrição ? (
-                        <Text style={estilos.descricao}>{produto.Descrição}</Text>
+                    {produto.Descricao ? (
+                        <Text style={estilos.descricao}>{produto.Descricao}</Text>
                     ) : (
                         <Text style={[estilos.descricao, estilos.semDescricao]}>
                             Nenhuma descrição disponível para este produto.
@@ -151,7 +152,7 @@ const { width } = Dimensions.get('window'); export default function TelaDetalheP
                             <Text style={estilos.tituloTotal}>Subtotal</Text>
                             <Text style={estilos.valorTotal}>{formatarMoeda(total)}</Text>
                         </View><TouchableOpacity style={estilos.botaoCarrinho} onPress={adicionarAoCarrinho}>
-                            <Text style={estilos.textoBotaoCarrinho}>🛒 Adicionar ao Carrinho</Text>
+                            <Text style={estilos.textoBotaoCarrinho}>🛒 Comprar agora</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -162,11 +163,11 @@ const { width } = Dimensions.get('window'); export default function TelaDetalheP
 } const estilos = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: paleta.white,
     },
     scrollContainer: {
         flexGrow: 1,
-        backgroundColor: '#f5f7fa',
+        backgroundColor: paleta.background,
     },
     carouselContainer: {
         position: 'relative',
@@ -302,11 +303,11 @@ const { width } = Dimensions.get('window'); export default function TelaDetalheP
     tituloQuantidade: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#14171a',
+        color: paleta.text,
     },
     subtituloQuantidade: {
         fontSize: 12,
-        color: '#657786',
+        color: paleta.muted,
         marginTop: 2,
     },
     contadorContainer: {

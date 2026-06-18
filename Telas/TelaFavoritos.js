@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { autenticacao, bancoDados } from '../config/firebaseConfig';
 import { collection, onSnapshot, doc, updateDoc } from 'firebase/firestore';
+import paleta from '../config/paletaCores';
 import RodapeNavegacao from './RodapeNavegacao';
 
 export default function TelaFavoritos({ navigation }) {
@@ -52,7 +53,7 @@ export default function TelaFavoritos({ navigation }) {
       <View style={styles.cardFav}>
         <Image source={imagem ? { uri: imagem } : require('../imagens/CoisaTeto-03.webp')} style={styles.imgFav} />
         <View style={{ flex: 1, marginLeft: 12 }}>
-          <Text style={styles.nomeFav}>{nome}</Text>
+          <Text style={styles.nomeFav}>{nome.length > 13 ? nome.substring(0, 13) + '...' : nome}</Text>
           <Text style={styles.precoFav}>{preco}</Text>
         </View>
         <TouchableOpacity style={styles.favoritoBadge} onPress={() => toggleFavorito(item)}>
@@ -66,7 +67,7 @@ export default function TelaFavoritos({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.titulo}>Meus Favoritos</Text>
       {carregando ? (
-        <ActivityIndicator size="large" color="#6f4dff" />
+        <ActivityIndicator size="large" color={paleta.primary} />
       ) : favoritos.length > 0 ? (
         <FlatList
           data={favoritos}
@@ -83,11 +84,11 @@ export default function TelaFavoritos({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f8f9fa', padding: 16 },
-  titulo: { fontSize: 18, fontWeight: 'bold', color: '#1e293b', marginBottom: 15 },
-  cardFav: { backgroundColor: '#fff', borderRadius: 12, flexDirection: 'row', padding: 12, alignItems: 'center', elevation: 1, marginBottom: 10 },
-  imgFav: { width: 60, height: 60, resizeMode: 'contain', borderRadius: 10, backgroundColor: '#f3f4f6' },
-  nomeFav: { fontSize: 14, fontWeight: '600', color: '#334155' },
-  precoFav: { fontSize: 14, fontWeight: 'bold', color: '#e11d48', marginTop: 2 },
-  vazio: { textAlign: 'center', color: '#64748b', marginTop: 40 }
+  container: { flex: 1, backgroundColor: paleta.background, padding: 16 ,height: '100%'},
+  titulo: { fontSize: 28, fontWeight: 'bold', color: paleta.primary, marginBottom: 15 },
+  cardFav: { backgroundColor: paleta.white, borderRadius: 12, flexDirection: 'row', padding: 12, alignItems: 'center', elevation: 1, marginBottom: 10, borderWidth: 1, borderColor: paleta.primary },
+  imgFav: { width: 60, height: 60, resizeMode: 'contain', borderRadius: 10, backgroundColor: paleta.surface },
+  nomeFav: { fontSize: 14, fontWeight: '600', color: paleta.text },
+  precoFav: { fontSize: 14, fontWeight: 'bold', color: paleta.danger, marginTop: 2 },
+  vazio: { textAlign: 'center', color: paleta.muted, marginTop: 40 }
 });

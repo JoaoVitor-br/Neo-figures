@@ -15,12 +15,13 @@ import {
 } from 'react-native';
 import { bancoDados,onAuth } from '../config/firebaseConfig';
 import { collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import paleta from '../config/paletaCores';
 import RodapeNavegacao from './RodapeNavegacao';
 
 const camposIniciais = {
   Produto: '',
   Preço: '',
-  Descrição: '',
+  Descricao: '',
   Foto: '',
   Foto2: '',
   Foto3: '',
@@ -131,7 +132,7 @@ export default function TelaAdmin({ navigation }) {
     setNovoProduto({
       Produto: produto.Produto || '',
       Preço: produto.Preço || '',
-      Descrição: produto.Descrição || '',
+      Descricao: produto.Descricao || '',
       Foto: produto.Foto || '',
       Foto2: produto.Foto2 || '',
       Foto3: produto.Foto3 || '',
@@ -239,9 +240,9 @@ export default function TelaAdmin({ navigation }) {
           </View>
         ) : null}
         <View style={estilos.infoContainer}>
-          <Text numberOfLines={2} style={estilos.nomeProduto}>{item.Produto}</Text>
-          {item.Descrição ? (
-            <Text numberOfLines={1} style={estilos.descricaoProduto}>{item.Descrição}</Text>
+          <Text numberOfLines={2} style={estilos.nomeProduto}>{item.Produto.length > 13 ? item.Produto.substring(0, 13) + '...' : item.Produto}</Text>
+          {item.Descricao ? (
+            <Text numberOfLines={1} style={estilos.descricaoProduto}>{item.Descricao}</Text>
           ) : null}
           <View style={estilos.precosContainer}>
             {item.ValorNormal ? (
@@ -298,8 +299,8 @@ export default function TelaAdmin({ navigation }) {
             <TextInput
               placeholder="Descrição (Opcional)"
               style={estilos.input}
-              value={novoProduto.Descrição}
-              onChangeText={(v) => atualizarCampo('Descrição', v)}
+              value={novoProduto.Descricao}
+              onChangeText={(v) => atualizarCampo('Descricao', v)}
             />
             <View style={estilos.inputLinha}>
               <TextInput
@@ -368,7 +369,7 @@ export default function TelaAdmin({ navigation }) {
 
         {carregando ? (
           <View style={estilos.centralizado}>
-            <ActivityIndicator size="large" color="#007BFF" />
+            <ActivityIndicator size="large" color={paleta.primary} />
             <Text style={estilos.textoCarregando}>Carregando produtos...</Text>
           </View>
         ) : produtos.length === 0 ? (
@@ -397,75 +398,76 @@ export default function TelaAdmin({ navigation }) {
 const estilos = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#f5f7fa',
+    backgroundColor: paleta.background,
   },
   container: {
     flex: 1,
-    backgroundColor: '#f5f7fa',
+    backgroundColor: paleta.background,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#fff',
+    paddingVertical: 16,
+    backgroundColor: paleta.primary,
     borderBottomWidth: 1,
-    borderBottomColor: '#e1e8ed',
+    borderBottomColor: paleta.primary,
   },
   subtitulo: {
-    fontSize: 14,
-    color: '#657786',
-    fontWeight: '600',
+    fontSize: 16,
+    color: paleta.white,
+    fontWeight: '700',
   },
   botaoToggleForm: {
-    backgroundColor: '#007BFF',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
+    backgroundColor: paleta.white,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
     borderRadius: 20,
   },
   textoBotaoToggleForm: {
-    color: '#fff',
-    fontSize: 12,
+    color: paleta.primary,
+    fontSize: 13,
     fontWeight: 'bold',
   },
   formulario: {
-    backgroundColor: '#fff',
+    backgroundColor: paleta.white,
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#e1e8ed',
+    borderBottomColor: paleta.divider,
   },
   tituloFormulario: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 12,
-    color: '#14171a',
+    color: paleta.primary,
   },
   input: {
-    backgroundColor: '#f8f9fa',
+    backgroundColor: paleta.surfaceLight,
     borderWidth: 1,
-    borderColor: '#e1e8ed',
+    borderColor: paleta.divider,
     borderRadius: 8,
     padding: 10,
     marginBottom: 10,
     fontSize: 14,
+    color: paleta.text,
   },
   inputLinha: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   botaoSalvar: {
-    backgroundColor: '#28a745',
+    backgroundColor: paleta.success,
     padding: 12,
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 6,
   },
   botaoDesativado: {
-    backgroundColor: '#94d3a2',
+    backgroundColor: paleta.disabled,
   },
   textoBotaoSalvar: {
-    color: '#fff',
+    color: paleta.white,
     fontWeight: 'bold',
     fontSize: 14,
   },
@@ -477,7 +479,7 @@ const estilos = StyleSheet.create({
   },
   textoCarregando: {
     marginTop: 10,
-    color: '#657786',
+    color: paleta.muted,
     fontSize: 14,
   },
   semProdutos: {
@@ -488,12 +490,12 @@ const estilos = StyleSheet.create({
   },
   textoSemProdutos: {
     fontSize: 16,
-    color: '#657786',
+    color: paleta.muted,
     textAlign: 'center',
     marginBottom: 20,
   },
   botaoPopular: {
-    backgroundColor: '#007BFF',
+    backgroundColor: paleta.primary,
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 25,
@@ -504,7 +506,7 @@ const estilos = StyleSheet.create({
     shadowRadius: 4,
   },
   textoBotaoPopular: {
-    color: '#fff',
+    color: paleta.white,
     fontSize: 14,
     fontWeight: 'bold',
   },
@@ -515,21 +517,21 @@ const estilos = StyleSheet.create({
     justifyContent: 'space-between',
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: paleta.white,
     width: '48%',
     borderRadius: 12,
     marginBottom: 16,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#e1e8ed',
+    borderColor: paleta.primary,
     elevation: 3,
-    shadowColor: '#000',
+    shadowColor: paleta.primary,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
+    shadowOpacity: 0.12,
     shadowRadius: 8,
     position: 'relative',
   },
-  botaoDeletar: {
+  botoDeletar: {
     position: 'absolute',
     top: 8,
     left: 8,
@@ -541,7 +543,7 @@ const estilos = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#e1e8ed',
+    borderColor: paleta.divider,
   },
   textoBotaoDeletar: {
     fontSize: 12,
@@ -551,20 +553,20 @@ const estilos = StyleSheet.create({
     top: 8,
     right: 8,
     zIndex: 10,
-    backgroundColor: '#e0245e',
+    backgroundColor: paleta.danger,
     paddingVertical: 4,
     paddingHorizontal: 8,
     borderRadius: 12,
   },
   textoBadgeDesconto: {
-    color: '#fff',
+    color: paleta.white,
     fontSize: 10,
     fontWeight: 'bold',
   },
   imagemProduto: {
     width: '100%',
     height: 140,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: paleta.surface,
   },
   infoContainer: {
     padding: 10,
@@ -574,13 +576,13 @@ const estilos = StyleSheet.create({
   nomeProduto: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#14171a',
+    color: paleta.text,
     marginBottom: 4,
     lineHeight: 18,
   },
   descricaoProduto: {
     fontSize: 12,
-    color: '#657786',
+    color: paleta.muted,
     marginBottom: 8,
   },
   precosContainer: {
@@ -588,30 +590,30 @@ const estilos = StyleSheet.create({
   },
   precoNormal: {
     fontSize: 12,
-    color: '#657786',
+    color: paleta.muted,
     textDecorationLine: 'line-through',
     marginBottom: 2,
   },
   precoVenda: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#1a1a1a',
+    color: paleta.text,
   },
   valorDescontoDescricao: {
     fontSize: 10,
-    color: '#28a745',
+    color: paleta.success,
     fontWeight: '600',
     marginTop: 2,
   },
   botaoEditar: {
-    backgroundColor: '#FF9F43',
+    backgroundColor: paleta.primary,
     paddingVertical: 8,
     borderRadius: 6,
     alignItems: 'center',
     marginTop: 4,
   },
   textoBotaoEditar: {
-    color: '#fff',
+    color: paleta.white,
     fontSize: 13,
     fontWeight: 'bold',
   },

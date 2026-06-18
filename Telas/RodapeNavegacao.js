@@ -18,16 +18,49 @@ export default function RodapeNavegacao({ navigation }) {
     }
   };
 
+  // Determinar rota ativa a partir do estado de navegação
+  const state = navigation && navigation.getState ? navigation.getState() : null;
+  const rotaAtiva = state && state.routes && typeof state.index === 'number' ? state.routes[state.index].name : null;
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.iconeNav} onPress={() => navegar('Favoritos')}>
-        <Image source={iconeFavoritos} style={styles.iconeImagem} resizeMode="contain" />
+      <TouchableOpacity
+        style={[styles.iconeNav, rotaAtiva === 'Favoritos' ? styles.iconeAtivo : null]}
+        onPress={() => navegar('Favoritos')}
+      >
+        <Image
+          source={iconeFavoritos}
+          style={[styles.iconeImagem, rotaAtiva === 'Favoritos' ? styles.iconeImagemAtivo : null]}
+          resizeMode="contain"
+        />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.iconeNavCentral} onPress={() => navegar('Carrinho')}>
-        <Image source={iconeCarrinho} style={styles.iconeImagemCentral} resizeMode="contain" />
+
+      <TouchableOpacity
+        style={[
+          styles.iconeNavCentral,
+          // mudar o background do carrinho quando não estivermos na 'Home'
+          rotaAtiva && rotaAtiva !== 'Home' ? { backgroundColor: paleta.primary } : null,
+          // agora o ícone central representa a Home
+          rotaAtiva === 'Home' ? styles.iconeAtivoCentral : null,
+        ]}
+        onPress={() => navegar('Home')}
+      >
+        <Image
+          source={iconeCarrinho}
+          style={[styles.iconeImagemCentral, rotaAtiva === 'Home' ? styles.iconeImagemAtivoCentral : null]}
+          resizeMode="contain"
+        />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.iconeNav} onPress={() => navegar('Admin')}>
-        <Image source={iconeAdmin} style={styles.iconeImagem} resizeMode="contain" />
+
+      <TouchableOpacity
+        style={[styles.iconeNav, rotaAtiva === 'Admin' ? styles.iconeAtivo : null]}
+        onPress={() => navegar('Admin')}
+      >
+        <Image
+          source={iconeAdmin}
+          style={[styles.iconeImagem, rotaAtiva === 'Admin' ? styles.iconeImagemAtivo : null]}
+          resizeMode="contain"
+        />
       </TouchableOpacity>
     </View>
   );
@@ -50,7 +83,16 @@ const styles = StyleSheet.create({
   },
   iconeNavCentral: {
     padding: 10,
-    backgroundColor: '#0D0D1A',
+    backgroundColor: paleta.black,
+    borderRadius: 16,
+  },
+  iconeAtivo: {
+    backgroundColor: paleta.white,
+    borderRadius: 12,
+    padding: 6,
+  },
+  iconeAtivoCentral: {
+    backgroundColor: paleta.primaryDark,
     borderRadius: 16,
   },
   iconeImagem: {
@@ -58,9 +100,15 @@ const styles = StyleSheet.create({
     height: 24,
     tintColor: paleta.white,
   },
+  iconeImagemAtivo: {
+    tintColor: paleta.primary,
+  },
   iconeImagemCentral: {
     width: 30,
     height: 30,
+    tintColor: paleta.white,
+  },
+  iconeImagemAtivoCentral: {
     tintColor: paleta.white,
   },
 });

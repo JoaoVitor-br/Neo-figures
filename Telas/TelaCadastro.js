@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { autenticacao } from '../config/firebaseConfig';
+import paleta from '../config/paletaCores';
 
 export default function TelaCadastro({ navigation }) {
   const [email, setEmail] = useState('');
@@ -97,18 +98,18 @@ const estilos = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F7F4FF',
+    backgroundColor: paleta.background,
     padding: 20,
   },
   card: {
     width: '100%',
     maxWidth: 420,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: paleta.white,
     borderRadius: 28,
     borderWidth: 2,
-    borderColor: '#7F5CFF',
+    borderColor: paleta.primary,
     padding: 24,
-    shadowColor: '#7F5CFF',
+    shadowColor: paleta.primary,
     shadowOpacity: 0.12,
     shadowRadius: 20,
     shadowOffset: { width: 0, height: 10 },
@@ -117,52 +118,52 @@ const estilos = StyleSheet.create({
   titulo: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#0D0D1A',
+    color: paleta.primary,
     marginBottom: 6,
   },
   subtitulo: {
     fontSize: 15,
-    color: '#5E5B7B',
+    color: paleta.muted,
     marginBottom: 24,
   },
   campo: {
     marginBottom: 16,
   },
   label: {
-    color: '#7F5CFF',
+    color: paleta.primary,
     fontWeight: '600',
     marginBottom: 8,
   },
   input: {
-    backgroundColor: '#F8F6FF',
+    backgroundColor: paleta.surface,
     borderWidth: 1,
-    borderColor: '#DAD7F7',
+    borderColor: paleta.divider,
     borderRadius: 18,
     paddingVertical: 14,
     paddingHorizontal: 18,
-    color: '#1A1A2E',
+    color: paleta.text,
   },
   botao: {
     marginTop: 10,
-    backgroundColor: '#7F5CFF',
+    backgroundColor: paleta.primary,
     borderRadius: 18,
     paddingVertical: 16,
     alignItems: 'center',
   },
   botaoTexto: {
-    color: '#FFF',
+    color: paleta.white,
     fontSize: 17,
     fontWeight: '700',
   },
   erro: {
-    color: '#FF4F91',
+    color: paleta.danger,
     marginTop: 14,
     textAlign: 'center',
     fontWeight: '600',
   },
   link: {
     marginTop: 20,
-    color: '#FF8C42',
+    color: paleta.primaryDark,
     fontWeight: '700',
     fontSize: 15,
   },

@@ -7,95 +7,94 @@
   <link rel="stylesheet" href="script.css">
 </head>
 <body>
-  <div class="app-shell">
-    <div class="screen-card">
-      <header class="screen-header">
-        <div>
-          <p class="eyebrow">Neo Figures</p>
-          <h1>Descubra novas figures</h1>
+  <div class="site-root">
+    <header class="topbar">
+      <div class="container">
+        <div class="brand">
+          <span class="logo">Neo</span><span class="logo-accent">Figures</span>
         </div>
-      </header>
+        <nav class="main-nav" aria-label="Menu principal">
+          <a href="#home">Home</a>
+          <a href="#app">Aplicativo</a>
+          <a href="#about">Sobre nós</a>
+          <a href="#services">Serviços</a>
+          <a class="cta" href="#contact">Contate-nos</a>
+        </nav>
+      </div>
+    </header>
 
-      <section class="products-grid">
-        <article class="product-card">
-          <button class="favorite" aria-label="Favorito">❤</button>
-          <img src="Naruto Figure.jpg" alt="Figure Neo" />
-          <div class="product-details">
-            <strong>Nome do produto</strong>
-            <div class="product-row">
-              <span class="price">R$67,00</span>
-              <button class="cart" aria-label="Adicionar ao carrinho">🛒</button>
+    <main>
+      <section id="home" class="hero">
+        <div class="container hero-inner">
+          <div class="hero-phones">
+            <img src="../imagens/phone-mock-1.png" alt="App mock 1" />
+            <img src="../imagens/phone-mock-2.png" alt="App mock 2" />
+          </div>
+          <div class="hero-content">
+            <h1>Transporte Escolar Seguro, na Palma da Sua Mão!</h1>
+            <p class="hero-sub">App para gestão e acompanhamento em tempo real do transporte escolar.</p>
+            <div class="store-buttons">
+              <button class="store-btn appstore">Disponível na<br>App Store</button>
+              <button class="store-btn playstore">Disponível na<br>Google Play</button>
             </div>
           </div>
-        </article>
-
-        <article class="product-card">
-          <button class="favorite" aria-label="Favorito">❤</button>
-          <img src="Naruto Figure.jpg" alt="Figure Neo" />
-          <div class="product-details">
-            <strong>Nome do produto</strong>
-            <div class="product-row">
-              <span class="price">R$67,00</span>
-              <button class="cart" aria-label="Adicionar ao carrinho">🛒</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <button class="favorite" aria-label="Favorito">❤</button>
-          <img src="Naruto Figure.jpg" alt="Figure Neo" />
-          <div class="product-details">
-            <strong>Nome do produto</strong>
-            <div class="product-row">
-              <span class="price">R$67,00</span>
-              <button class="cart" aria-label="Adicionar ao carrinho">🛒</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <button class="favorite" aria-label="Favorito">❤</button>
-          <img src="Naruto Figure.jpg" alt="Figure Neo" />
-          <div class="product-details">
-            <strong>Nome do produto</strong>
-            <div class="product-row">
-              <span class="price">R$67,00</span>
-              <button class="cart" aria-label="Adicionar ao carrinho">🛒</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <button class="favorite" aria-label="Favorito">❤</button>
-          <img src="Naruto Figure.jpg" alt="Figure Neo" />
-          <div class="product-details">
-            <strong>Nome do produto</strong>
-            <div class="product-row">
-              <span class="price">R$67,00</span>
-              <button class="cart" aria-label="Adicionar ao carrinho">🛒</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <button class="favorite" aria-label="Favorito">❤</button>
-          <img src="Naruto Figure.jpg" alt="Figure Neo" />
-          <div class="product-details">
-            <strong>Nome do produto</strong>
-            <div class="product-row">
-              <span class="price">R$67,00</span>
-              <button class="cart" aria-label="Adicionar ao carrinho">🛒</button>
-            </div>
-          </div>
-        </article>
+        </div>
       </section>
 
-      <nav class="bottom-nav">
-        <button class="nav-item active" aria-label="Favoritos">❤</button>
-        <button class="nav-item" aria-label="Carrinho">🛒</button>
-        <button class="nav-item" aria-label="Pedidos">📦</button>
-      </nav>
-    </div>
+      <section id="about" class="about container">
+        <h2>Sobre nós</h2>
+        <div class="about-grid">
+          <p>Lorem ipsum dolor sit amet consectetur. Condimentum lectus nunc viverra. Viverra enim nulla sodales enim sed.</p>
+          <img src="../imagens/illustration-about.png" alt="Sobre" />
+        </div>
+      </section>
+
+      <section id="services" class="services">
+        <div class="container services-inner">
+          <div class="services-image">
+            <img src="../imagens/services-phone.png" alt="Serviços" />
+          </div>
+          <div class="services-list">
+            <h2>Serviços</h2>
+            <ul>
+              <li>Facilidade nos pagamentos</li>
+              <li>Exibe a localização do veículo em tempo real</li>
+              <li>Estima o tempo previsto para chegada</li>
+              <li>Comunicação via chat</li>
+              <li>Atualização de pagamentos</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="contact container">
+        <h2>Contate-nos</h2>
+        <div class="contact-grid">
+          <form class="contact-form">
+            <label>Seu nome*</label>
+            <input type="text" placeholder="Seu nome" />
+            <label>Seu Email*</label>
+            <input type="email" placeholder="Seu Email" />
+            <label>Seu Telefone*</label>
+            <input type="tel" placeholder="Seu Telefone" />
+            <label>Sua mensagem*</label>
+            <textarea placeholder="Sua mensagem"></textarea>
+            <button class="submit">Enviar</button>
+          </form>
+          <aside class="contact-info">
+            <h3>Info</h3>
+            <p>studio5@gmail.com</p>
+            <p>+55 11 99999-9999</p>
+            <p>Rua Van Race, 99</p>
+            <p>09:00 - 18:00</p>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">© 2026 NeoFigures</div>
+    </footer>
   </div>
   <script src="script.js"></script>
 </body>

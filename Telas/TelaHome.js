@@ -85,7 +85,7 @@ export default function TelaHome({ navigation }) {
       </View>
       <View style={estilos.rodapeProduto}>
         <View>
-          <Text style={estilos.nomeProduto}>{item.Produto || item.nome}</Text>
+          <Text style={estilos.nomeProduto}>{((item.Produto || item.nome).length > 13 ? (item.Produto || item.nome).substring(0, 13) + '...' : (item.Produto || item.nome))}</Text>
           <Text style={estilos.precoProduto}>{item.Preço || item.preco}</Text>
         </View>
         <TouchableOpacity
